@@ -1,0 +1,27 @@
+<!-- Individual Task from the Panel -->
+<!--
+ <div class="task flex-center" draggable [dragData]="dataObj" (onDragStart)="dragPanel.emit(taskType)" [ngClass]="{'pending':taskType=='pending','inprogress':taskType=='inprogress','completed':taskType=='completed'}">
+    <i class="fas priority-icon" [ngClass]="{'fa-arrow-down':dataObj.taskPriority == 'low','fa-arrow-up':dataObj.taskPriority == 'high','fa-long-arrow-alt-right':dataObj.taskPriority == 'normal'}"></i>
+    <p class="m-0 text-white">{{dataObj.taskLabel}}</p>
+    <div class="action-items">
+      <i class="fas fa-pencil-alt action-icon" (click)="updateTask()"></i>
+      <i class="fas fa-trash action-icon" (click)="deleteTask()"></i>
+    </div>
+  </div> -->
+
+  <div class="card text-center" draggable [dragData]="dataObj" (onDragStart)="dragPanel.emit(taskType)" [ngClass]="{'pending':taskType=='pending','inprogress':taskType=='inprogress','completed':taskType=='completed'}">
+    <div class="card-header flex-center">
+      <i class="fas priority-icon" [ngClass]="{'fa-arrow-down':dataObj.taskPriority == 'low','fa-arrow-up':dataObj.taskPriority == 'high','fa-long-arrow-alt-right':dataObj.taskPriority == 'normal'}"></i>
+      <p class="m-0 text-white">{{dataObj.taskLabel}}</p>
+      <div class="action-items">
+        <i class="fas fa-pencil-alt action-icon" (click)="updateTask()"></i>
+        <i class="fas fa-trash action-icon" (click)="deleteTask()"></i>
+      </div>
+    </div>
+    <div class="card-body" >
+      <p class="card-text float-left">{{dataObj.taskDescription}}</p>
+    </div>
+    <div class="card-footer text-muted float-left">
+      <i class="fas fa-clock"></i> {{dataObj.taskDueDate}}
+    </div>
+  </div>

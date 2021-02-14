@@ -1,0 +1,81 @@
+/* You can add global styles to this file, and also import other style files */
+
+*,*:before,*:after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.seperation-line{
+  border-right:1px solid black;
+}
+
+.flex-center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+.task{
+  background: gray;
+  padding: 0.5rem;
+  margin: 1rem 0rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.priority-icon{
+  font-size: 1.4rem;
+}
+.action-icon{
+  font-size: 1.1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.main-heading{
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.card{
+  margin-bottom:1rem;
+  .card-body{
+    min-height: 68px;
+    padding: 1rem;
+    p{
+      font-size: 0.8rem;
+    }
+  }
+  .card-text{
+    font-size: 0.8rem;
+  }
+  .card-footer{
+    font-size: 0.8rem;
+    padding:0.5rem;
+    background-color: white;
+  }
+}
+
+.pending{
+  border-color: orange;
+  .card-header{
+    background-color: orange;
+  }
+}
+.inprogress{
+  border-color: #c2b626;
+  .card-header{
+    background-color: #c2b626;
+  }
+}
+.completed{
+  border-color: green;
+  .card-header{
+    background-color: green;
+  }
+}
+
+.text-amber{
+  color:#FFBF00;
+}

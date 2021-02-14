@@ -1,0 +1,88 @@
+<div class="container mt-2">
+  <div class="card">
+    <div class="card-header"><span class="main-heading">Daily Task Manager</span>
+        <button class="btn btn-primary float-right" (click)="openModal(addTaskModal);initiateTaskAddition();">Add New Task</button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <h6 class="ml-auto pr-4" [ngClass]="{'text-danger':performaceCount < 33,'text-amber':performaceCount > 33 && performaceCount < 66,'text-success':performaceCount > 66 }"> {{performaceCount}}% </h6>
+      </div>
+        <div class="row">
+            <div class="col seperation-line" droppable (onDrop)="taskDropped('pending',$event)">
+                <h6 class="text-center">Pending</h6>
+               <ng-container *ngFor="let indPendingTask of pendingTaskList$ | async;let pendingIndex=index;">
+                  <app-task [data]="indPendingTask" taskType="pending" (updateTaskData)="initiateTaskUpdate($event)" (deleteTaskData)="initiateTaskDeletion($event)" (dragPanel)="initializeDragPanel($event)"></app-task>
+               </ng-container>
+            </div>
+            <div class="col seperation-line" droppable (onDrop)="taskDropped('inprogress',$event)">
+              <h6 class="text-center">In Process</h6>
+              <ng-container *ngFor="let indInprogressTask of inProgressTaskList$ | async;let inProgressIndex=index;" >
+                <app-task [data]="indInprogressTask"taskType="inprogress" (updateTaskData)="initiateTaskUpdate($event)" (deleteTaskData)="initiateTaskDeletion($event)" (dragPanel)="initializeDragPanel($event)"></app-task>
+              </ng-container>
+            </div>
+            <div class="col" droppable (onDrop)="taskDropped('completed',$event)">
+              <h6 class="text-center">Completed</h6>
+              <ng-container *ngFor="let indCompletedTask of completedTaskList$ | async;let completedIndex=index;">
+                <app-task [data]="indCompletedTask" taskType="completed" (updateTaskData)="initiateTaskUpdate($event)" (deleteTaskData)="initiateTaskDeletion($event)" (dragPanel)="initializeDragPanel($event)"></app-task>
+              </ng-container>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Update Task Model -->
+<ng-template #addTaskModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{isUpdate ? 'Update Task': 'Add Task'}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (submit)="addUpdateTask();modalRef.hide();" [formGroup]="taskForm">
+      <div class="form-group">
+        <label for="taskTitle">Task Title</label>
+        <input type="text" class="form-control" id="taskTitle" aria-describedby="taskTitleHelp" placeholder="Enter Title" formControlName="taskLabel">
+        <small id="taskTitleHelp" class="form-text text-muted">A Short Precise Title for you task</small>
+      </div>
+      <div class="form-group">
+        <label for="priority">Select Priority</label>
+        <select class="form-control" id="priority"  formControlName="taskPriority" aria-describedby="taskPriorityHelp">
+          <option value="high">High</option>
+          <option value="normal">Normal</option>
+          <option value="low">Low</option>
+        </select>
+        <small id="taskPriorityHelp" class="form-text text-muted">Priority of your task</small>
+      </div>
+      <div class="form-group">
+        <label for="taskDescription">Task Description</label>
+        <textarea class="form-control" id="taskDescription" rows="3"  formControlName="taskDescription" aria-describedby="taskDescriptionHelp"></textarea>
+        <small id="taskDescriptionHelp" class="form-text text-muted">Detailed Description of your task</small>
+      </div>
+      <div class="form-group">
+        <label for="taskDueDate">Due Date</label>
+        <input class="form-control" id="taskDueDate" formControlName="taskDueDate" aria-describedby="taskDueDateHelp" type="datetime-local"/>
+        <small id="taskDueDateHelp" class="form-text text-muted">Due Date for your task</small>
+      </div>
+      <button type="submit" class="btn btn-primary" *ngIf="isUpdate;else addTaskButton">Update Task</button>
+      <ng-template #addTaskButton>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+      </ng-template>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #deleteTaskModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Delete Task</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <p>Are you sure you want to delete this Task ? </p>
+      <button type="button" class="btn btn-danger" (click)="deleteTask();modalRef.hide();">Yes, Delete</button>
+  </div>
+</ng-template>
